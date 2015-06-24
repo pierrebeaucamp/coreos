@@ -1,0 +1,5 @@
+*~
+*.swp
+*.tfstate
+*.backup
+discovery.txt
