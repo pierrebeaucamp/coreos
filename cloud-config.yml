@@ -14,7 +14,7 @@ coreos:
         public-ip: $public_ipv4
         metadata: region=${region},host=${name}
     units:
-        - name: etcd.service
+        - name: etcd2.service
           command: start
         - name: fleet.service
           command: start
