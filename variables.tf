@@ -41,7 +41,7 @@ variable "region" {
     default = {                                                          
         "0" = "fra1"
         "1" = "nyc3"
-        "2" = "nyc3"
+        "2" = "sgp1"
     }                                                                    
 }
 

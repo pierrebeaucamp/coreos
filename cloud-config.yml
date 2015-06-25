@@ -6,6 +6,9 @@ coreos:
         ca-file: /home/core/ca.crt
         cert-file: /home/core/node.crt
         key-file: /home/core/node.key
+        peer-ca-file: /home/core/ca.crt
+        peer-cert-file: /home/core/node.crt
+        peer-key-file: /home/core/node.key
         discovery: ${discovery}
         advertise-client-urls: http://$public_ipv4:2379
         initial-advertise-peer-urls: http://$public_ipv4:2380
@@ -25,6 +28,8 @@ coreos:
           command: start
         - name: fleet.service
           command: start
+    update:
+        reboot-strategy: etcd-lock
 write_files:
     - path: /etc/profile.d/fleetctl.sh
       permissions: 0644
