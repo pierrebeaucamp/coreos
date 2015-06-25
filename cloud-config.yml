@@ -10,7 +10,11 @@ coreos:
         listen-peer-urls: http://$public_ipv4:2380
         election_timeout: 5000
         heartbeat_interval: 1000
+    fleet:
+        public-ip: $public_ipv4
+        metadata: region=${region},host=${name}
     units:
         - name: etcd.service
           command: start
-
+        - name: fleet.service
+          command: start
