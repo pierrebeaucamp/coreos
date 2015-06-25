@@ -10,10 +10,10 @@ coreos:
         peer-cert-file: /home/core/node.crt
         peer-key-file: /home/core/node.key
         discovery: ${discovery}
-        advertise-client-urls: http://$public_ipv4:2379
-        initial-advertise-peer-urls: http://$public_ipv4:2380
-        listen-client-urls: http://0.0.0.0:2379
-        listen-peer-urls: http://$public_ipv4:2380
+        advertise-client-urls: https://$public_ipv4:2379
+        initial-advertise-peer-urls: https://$public_ipv4:2380
+        listen-client-urls: https://0.0.0.0:2379
+        listen-peer-urls: https://$public_ipv4:2380
         election_timeout: 5000
         heartbeat_interval: 1000
     fleet:
