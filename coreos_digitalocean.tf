@@ -11,6 +11,9 @@ resource "template_file" "node" {
         name = "${lookup(var.name, count.index)}"
         region = "${lookup(var.region, count.index)}"
         discovery = "${file(var.discovery)}"
+        ca = "${file(var.ca)}"
+        crt = "${file(lookup(var.crt, count.index))}"
+        key = "${file(lookup(var.key, count.index))}"
     }
 }
 

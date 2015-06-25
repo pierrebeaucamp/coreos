@@ -2,4 +2,7 @@
 *.swp
 *.tfstate
 *.backup
+*.crt
+*.key
+
 discovery.txt
