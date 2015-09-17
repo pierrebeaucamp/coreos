@@ -14,8 +14,8 @@ coreos:
         initial-advertise-peer-urls: https://$public_ipv4:2380
         listen-client-urls: https://0.0.0.0:2379
         listen-peer-urls: https://$public_ipv4:2380
-        election_timeout: 5000
-        heartbeat_interval: 1000
+        election_timeout: 50000
+        heartbeat_interval: 5000
     fleet:
         public-ip: $public_ipv4
         etcd-servers: "https://$public_ipv4:2379"
