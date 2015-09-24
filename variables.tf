@@ -40,7 +40,7 @@ variable "name" {
 variable "region" {
     default = {
         "0" = "fra1"
-        "1" = "tor1"
+        "1" = "nyc3"
         "2" = "sgp1"
     }
 }
