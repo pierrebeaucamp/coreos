@@ -1,5 +1,5 @@
 # Needs to be set as an argument
-variable "do_token" {}                                                   
+variable "do_token" {}
 
 variable "ca" {
     default = "ca.crt"
@@ -29,19 +29,19 @@ variable "key" {
     }
 }
 
-variable "name" {                                                        
-    default = {                                                          
+variable "name" {
+    default = {
         "0" = "finn"
         "1" = "jake"
         "2" = "bmo"
-    }                                                                    
-} 
+    }
+}
 
-variable "region" {    
-    default = {                                                          
+variable "region" {
+    default = {
         "0" = "fra1"
-        "1" = "nyc3"
+        "1" = "tor1"
         "2" = "sgp1"
-    }                                                                    
+    }
 }
 
