@@ -3,12 +3,12 @@
 coreos:
     etcd2:
         name: ${name}
-        ca-file: /home/core/ca.crt
-        cert-file: /home/core/node.crt
-        key-file: /home/core/node.key
-        peer-ca-file: /home/core/ca.crt
-        peer-cert-file: /home/core/node.crt
-        peer-key-file: /home/core/node.key
+        ca-file: /home/core/certs/ca.crt
+        cert-file: /home/core/certs/node.crt
+        key-file: /home/core/certs/node.key
+        peer-ca-file: /home/core/certs/ca.crt
+        peer-cert-file: /home/core/certs/node.crt
+        peer-key-file: /home/core/certs/node.key
         discovery: ${discovery}
         advertise-client-urls: https://$public_ipv4:2379
         initial-advertise-peer-urls: https://$public_ipv4:2380
@@ -19,9 +19,9 @@ coreos:
     fleet:
         public-ip: $public_ipv4
         etcd-servers: "https://$public_ipv4:2379"
-        etcd-cafile: /home/core/ca.crt
-        etcd-certfile: /home/core/node.crt
-        etcd-keyfile: /home/core/node.key
+        etcd-cafile: /home/core/certs/ca.crt
+        etcd-certfile: /home/core/certs/node.crt
+        etcd-keyfile: /home/core/certs/node.key
         metadata: region=${region},host=${name}
     units:
         - name: etcd2.service
@@ -36,18 +36,18 @@ write_files:
       owner: core
       content: |
         export FLEETCTL_ENDPOINT="https://$public_ipv4:2379"
-        export FLEETCTL_CA_FILE=/home/core/ca.crt
-        export FLEETCTL_CERT_FILE=/home/core/node.crt
-        export FLEETCTL_KEY_FILE=/home/core/node.key
-    - path: /home/core/ca.crt
+        export FLEETCTL_CA_FILE=/home/core/certs/ca.crt
+        export FLEETCTL_CERT_FILE=/home/core/certs/node.crt
+        export FLEETCTL_KEY_FILE=/home/core/certs/node.key
+    - path: /home/core/certs/ca.crt
       permissions: 0444
       owner: core
       content: |
-        ${ca}    - path: /home/core/node.crt
+        ${ca}    - path: /home/core/certs/node.crt
       permissions: 0444
       owner: core
       content: |
-        ${crt}    - path: /home/core/node.key
+        ${crt}    - path: /home/core/certs/node.key
       permissions: 0444
       owner: core
       content: |
