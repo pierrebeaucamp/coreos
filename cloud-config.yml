@@ -37,7 +37,7 @@ coreos:
             After=etcd2.service
 
             [Service]
-            ExecStart=/etc/usr/bin/rkt --insecure-skip-verify run \
+            ExecStart=/usr/bin/rkt --insecure-skip-verify run \
                       --volume certs,kind=host,source=/home/core/certs \
                       https://github.com/blau-io/proxii/releases/download/v0.0.1/proxii.aci \
                       -- -etcdAddress="https://$public_ipv4:2379" \
@@ -59,6 +59,14 @@ write_files:
         export FLEETCTL_CA_FILE=/home/core/certs/ca.crt
         export FLEETCTL_CERT_FILE=/home/core/certs/node.crt
         export FLEETCTL_KEY_FILE=/home/core/certs/node.key
+    - path: /etc/profile.d/etcdctl.sh
+      permissions: 0644
+      owner: core
+      content: |
+        export ETCDCTL_PEERS="https://$public_ipv4:2379"
+        export ETCDCTL_CA_FILE=/home/core/certs/ca.crt
+        export ETCDCTL_CERT_FILE=/home/core/certs/node.crt
+        export ETCDCTL_KEY_FILE=/home/core/certs/node.key
     - path: /home/core/certs/ca.crt
       permissions: 0444
       owner: core
