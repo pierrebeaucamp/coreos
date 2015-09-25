@@ -31,6 +31,26 @@ coreos:
     update:
         reboot-strategy: etcd-lock
 write_files:
+    - path: /home/core/service/proxii.service
+      permissions: 0644
+      owner: core
+      content: |
+          [Unit]
+          Description=Proxii
+          Wants=etcd.service
+          After=etcd.service
+
+          [Service]
+          ExecStart=/etc/usr/bin/rkt -insecure-skip-verify run \
+          -volume certs,kind=host,source=/home/core/certs \
+          https://github.com/blau-io/proxii/releases/download/v0.0.1/proxii.aci \
+          -- -etcdAddress="https://$public_ipv4:2379" \
+            -etcdCaFile=/certs/ca.crt -etcdCertFile=/certs/node.crt \
+            -etcdKeyFile=/certs/node.key
+          Restart=always
+
+          [X-Fleet]
+          Global=true
     - path: /etc/profile.d/fleetctl.sh
       permissions: 0644
       owner: core

@@ -34,6 +34,6 @@ resource "digitalocean_droplet" "node" {
     region = "${lookup(var.region, count.index)}"
     size = "512mb"
     ipv6 = true
-    ssh_keys = ["639062", "1495325"]
+    ssh_keys = ["639062"]
     user_data = "${element(template_file.node.*.rendered, count.index)}"
 }
