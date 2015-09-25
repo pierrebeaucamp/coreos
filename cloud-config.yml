@@ -31,7 +31,7 @@ coreos:
     update:
         reboot-strategy: etcd-lock
 write_files:
-    - path: /home/core/service/proxii.service
+    - path: /home/core/proxii/proxii.service
       permissions: 0644
       owner: core
       content: |
@@ -41,8 +41,10 @@ write_files:
           After=etcd.service
 
           [Service]
+          ExecStartPre=/usr/bin/mkdir -p /home/core/proxii/certs
+          ExecStartPre=/usr/bin/cp /home/core/certs/* /home/core/proxii/certs/
           ExecStart=/etc/usr/bin/rkt -insecure-skip-verify run \
-          -volume certs,kind=host,source=/home/core/certs \
+          -volume certs,kind=host,source=/home/core/proxii/certs \
           https://github.com/blau-io/proxii/releases/download/v0.0.1/proxii.aci \
           -- -etcdAddress="https://$public_ipv4:2379" \
             -etcdCaFile=/certs/ca.crt -etcdCertFile=/certs/node.crt \
