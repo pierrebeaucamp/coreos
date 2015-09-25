@@ -44,6 +44,7 @@ coreos:
                          -etcdCaFile=/certs/ca.crt -etcdCertFile=/certs/node.crt \
                          -etcdKeyFile=/certs/node.key
             Restart=always
+            RestartSec=10
 
             [X-Fleet]
             Global=true
