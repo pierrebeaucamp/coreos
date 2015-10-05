@@ -107,8 +107,7 @@ coreos:
 
             [X-Fleet]
             Global=true
-
-   update:
+    update:
         reboot-strategy: etcd-lock
 write_files:
     - path: /etc/profile.d/fleetctl.sh
@@ -142,5 +141,5 @@ write_files:
         ${key}    - path: /home/core/client-secret.json
       permissions: 0444
       owner: core
-      content |
+      content: |
         ${client-secret}

@@ -5,6 +5,10 @@ variable "ca" {
     default = "ca.crt"
 }
 
+variable "client-secret" {
+    default = "client-secret.json"
+}
+
 variable "count" {
     default = 3
 }
