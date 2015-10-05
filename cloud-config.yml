@@ -49,7 +49,66 @@ coreos:
 
             [X-Fleet]
             Global=true
-    update:
+        - name: google-drive.service
+          command: start
+          content: |
+            [Unit]
+            Description=Google Drive
+            Wants=proxii.service
+            After=proxii.service
+
+            [Service]
+            ExecStart=/usr/bin/rkt --insecure-skip-verify run \
+                      --volume client-secret,kind=host,source=/home/core/client-secret.json \
+                      --volume resolv-conf,kind=host,source=/etc/resolv.conf \
+                      https://github.com/blau-io/google-drive/releases/download/v0.0.1/google-drive.aci \
+                      -- -port=8282
+            Restart=always
+            RestartSec=10
+
+            [X-Fleet]
+            Global=true
+        - name: ando.service
+          command: start
+          content: |
+            [Unit]
+            Description=Ando
+            Wants=google-drive.service
+            After=google-drive.service
+
+            [Service]
+            ExecStart=/usr/bin/rkt --insecure-skip-verify run \
+                      --volume resolv-conf,kind=host,source=/etc/resolv.conf \
+                      https://github.com/blau-io/ando/releases/download/v0.0.1/ando.aci \
+                      -- -port=8181 \
+            Restart=always
+            RestartSec=10
+
+            [X-Fleet]
+            Global=true
+        - name: dashboard.service
+          command: start
+          content: |
+            [Unit]
+            Description=Dashboard
+            Wants=ando.service
+            After=ando.service
+
+            [Service]
+            ExecStart=/usr/bin/rkt --insecure-skip-verify run \
+                      --volume certs,kind=host,source=/home/core/certs \
+                      --volume resolv-conf,kind=host,source=/etc/resolv.conf \
+                      https://github.com/blau-io/proxii/releases/download/v0.0.1/proxii.aci \
+                      -- -etcdAddress="https://$public_ipv4:2379" \
+                         -etcdCaFile=/certs/ca.crt -etcdCertFile=/certs/node.crt \
+                         -etcdKeyFile=/certs/node.key -port=8080
+            Restart=always
+            RestartSec=10
+
+            [X-Fleet]
+            Global=true
+
+   update:
         reboot-strategy: etcd-lock
 write_files:
     - path: /etc/profile.d/fleetctl.sh
@@ -80,4 +139,8 @@ write_files:
       permissions: 0444
       owner: core
       content: |
-        ${key}
+        ${key}    - path: /home/core/client-secret.json
+      permissions: 0444
+      owner: core
+      content |
+        ${client-secret}

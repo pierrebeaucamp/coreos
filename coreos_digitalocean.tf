@@ -14,6 +14,7 @@ resource "template_file" "node" {
         ca = "${file(var.ca)}"
         crt = "${file(lookup(var.crt, count.index))}"
         key = "${file(lookup(var.key, count.index))}"
+        client-secret = "${file(client-secret.json)}"
     }
 }
 
