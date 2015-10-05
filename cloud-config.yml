@@ -40,7 +40,7 @@ coreos:
             ExecStart=/usr/bin/rkt --insecure-skip-verify run \
                       --volume certs,kind=host,source=/home/core/certs \
                       --volume resolv-conf,kind=host,source=/etc/resolv.conf \
-                      https://github.com/blau-io/proxii/releases/download/v0.0.1/proxii.aci \
+                      https://github.com/blau-io/proxii/releases/download/v0.0.2/proxii.aci \
                       -- -etcdAddress="https://$public_ipv4:2379" \
                          -etcdCaFile=/certs/ca.crt -etcdCertFile=/certs/node.crt \
                          -etcdKeyFile=/certs/node.key
@@ -59,10 +59,11 @@ coreos:
 
             [Service]
             ExecStart=/usr/bin/rkt --insecure-skip-verify run \
+                      --volume certs,kind=host,source=/etc/ssl/certs/ca-certificates.crt \
                       --volume client-secret,kind=host,source=/home/core/client-secret.json \
                       --volume resolv-conf,kind=host,source=/etc/resolv.conf \
                       https://github.com/blau-io/google-drive/releases/download/v0.0.1/google-drive.aci \
-                      -- -port=8282
+                      -- -port=8282 -secretFile="client-secret.json"
             Restart=always
             RestartSec=10
 
@@ -98,7 +99,7 @@ coreos:
             ExecStart=/usr/bin/rkt --insecure-skip-verify run \
                       --volume certs,kind=host,source=/home/core/certs \
                       --volume resolv-conf,kind=host,source=/etc/resolv.conf \
-                      https://github.com/blau-io/proxii/releases/download/v0.0.1/proxii.aci \
+                      https://github.com/blau-io/dashboard/releases/download/v0.0.1/dashboard.aci \
                       -- -etcdAddress="https://$public_ipv4:2379" \
                          -etcdCaFile=/certs/ca.crt -etcdCertFile=/certs/node.crt \
                          -etcdKeyFile=/certs/node.key -port=8080
