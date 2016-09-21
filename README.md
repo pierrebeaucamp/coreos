@@ -1,4 +1,4 @@
-# Terraform configuration for the Doze.io CoreOS Cluster
+# Terraform configuration for a CoreOS Cluster
 
 Run `terraform apply -var 'do_token=XXX'` to build the cluster. `do_token` is the API key from Digital Ocean
 
